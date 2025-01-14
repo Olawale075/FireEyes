@@ -28,8 +28,7 @@ public class TwilioSMSService {
     private  OTPService otpService;
     @Autowired
     private SmsReceiverServiceImpl userService;
-    @Autowired
-    private BinSevice binService;
+
     @Autowired // Added to handle user-related logic
     private  ReceiverRepository receiverRepository;
 
@@ -131,30 +130,5 @@ private void initializeTwilio() {
 
         return "Message sent to all users.";
     }
-    public String sendOtpForRegistrations(BinUser user) {
-        initializeTwilio();
-        // Check if the phone number is already registered
-        if (binService.isPhoneNumberRegistered(user.getPhonenumber())) {
-            return "Phone number already registered.";
-        }
-
-        // Generate a 6-digit OTP
-        String otp = OtpGenerator.generateOtps(null);
-
-        // Temporarily store user details and OTP for validation
-        otpService.storeOtp(user.getPhonenumber(), otp);
-        binService.saveTempUser(user); // Save the user temporarily
-
-        // Send OTP using Twilio API
-        try {
-            Message message = Message.creator(
-                new com.twilio.type.PhoneNumber(user.getPhonenumber()),
-                new com.twilio.type.PhoneNumber(twilioConfig.getFromNumber()),
-                "Welcome to our app! Your OTP is: " + otp
-            ).create();
-            return "OTP sent successfully to " + user.getPhonenumber() + ", SID: " + message.getSid();
-        } catch (Exception e) {
-            return "Failed to send OTP to " + user.getPhonenumber() + ": " + e.getMessage();
-        }
-    }
+   
 }

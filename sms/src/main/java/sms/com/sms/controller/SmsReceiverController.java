@@ -27,12 +27,6 @@ public class SmsReceiverController {
   @Autowired
     private final OTPService otpService;
    
-
-    @PostMapping("/send-otp")
-    public ResponseEntity<String> sendOtp(@RequestBody ReceiverDetails user) {
-        String response = service.sendOTP(user);
-        return ResponseEntity.ok(response);
-    }
     @GetMapping
     public List<ReceiverDetails> getAllReceiverDetails() {
         return service.getAllDetails();
