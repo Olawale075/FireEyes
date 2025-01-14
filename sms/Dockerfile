@@ -1,6 +1,6 @@
 
 
-FROM maven:3.0.6-openjdk-17 AS build
+FROM openjdk-17-alpine 
 COPY . .
 RUN mvn clean package -DskipTests
 
