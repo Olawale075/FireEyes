@@ -11,7 +11,7 @@ import com.twilio.rest.api.v2010.account.Message;
 
 
 import sms.com.sms.config.TwilioConfig;
-import sms.com.sms.model.BinUser;
+
 import sms.com.sms.model.ReceiverDetails;
 import sms.com.sms.repository.ReceiverRepository;
 
